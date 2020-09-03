@@ -6,7 +6,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +15,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              _buildButton(),
+              SizedBox(height: 50),
+              Center(
+                child: _buildButton(),
+              ),
             ],
           ),
         ),
@@ -25,9 +30,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _buildButton() {
     return WButton(
+      // vsync: this,
+      // loading: CircularProgressIndicator(),
       icon: Icons.add,
       label: "ABC",
-      onPressed: () {},
+      onPressed: () async {
+        await Future.delayed(Duration(seconds: 2));
+        print("Tap");
+      },
     );
   }
 }
