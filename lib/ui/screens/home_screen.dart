@@ -14,28 +14,44 @@ class _HomeScreenState extends State<HomeScreen>
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 50),
-              Center(
-                child: _buildButton(),
-              ),
-            ],
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 50),
+                Text("Without loading"),
+                _buildButton(),
+                SizedBox(height: 50),
+                Text("With loading"),
+                _buildLoadingButton(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildLoadingButton() {
     return WButton(
-      // vsync: this,
-      // loading: CircularProgressIndicator(),
+      vsync: this,
+      loading: CircularProgressIndicator(),
       icon: Icons.add,
-      label: "ABC",
+      label: "Add",
       onPressed: () async {
         await Future.delayed(Duration(seconds: 2));
+        print("Tap");
+      },
+    );
+  }
+
+  Widget _buildButton() {
+    return WButton(
+      icon: Icons.add,
+      label: "Add",
+      textAllCaps: true,
+      onPressed: () async {
         print("Tap");
       },
     );

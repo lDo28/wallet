@@ -13,6 +13,7 @@ class WButton extends StatefulWidget {
   final int animationDuration;
   final Curve curve;
   final ProgressIndicator loading;
+  final bool textAllCaps;
 
   const WButton({
     Key key,
@@ -28,6 +29,7 @@ class WButton extends StatefulWidget {
     this.animationDuration = 500,
     this.curve = Curves.easeIn,
     this.loading,
+    this.textAllCaps = false
   })  : assert(icon != null || label != null),
         assert(loading == null || (loading != null && vsync != null)),
         super(key: key);
@@ -49,7 +51,9 @@ class _WButtonState extends State<WButton> {
     }
     return Container(
       decoration: BoxDecoration(
-        color: _isLoading ? widget.backgroundColor : Colors.transparent,
+        color: _isLoading && !_isOutline
+            ? widget.backgroundColor
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(_isLoading ? 50 : 8),
       ),
       child: AnimatedSize(
@@ -80,7 +84,7 @@ class _WButtonState extends State<WButton> {
     switch (widget.type) {
       case ButtonType.raise:
         return RaisedButton(
-          child: Text(widget.label),
+          child: Text(_label),
           color: widget.backgroundColor,
           textColor: widget.foregroundColor,
           disabledColor: widget.disabledColor.withOpacity(.2),
@@ -91,7 +95,7 @@ class _WButtonState extends State<WButton> {
         );
       case ButtonType.outline:
         return OutlineButton(
-          child: Text(widget.label),
+          child: Text(_label),
           color: widget.backgroundColor,
           textColor: widget.foregroundColor,
           disabledBorderColor: widget.disabledColor.withOpacity(.2),
@@ -101,7 +105,7 @@ class _WButtonState extends State<WButton> {
         );
       default:
         return FlatButton(
-          child: Text(widget.label),
+          child: Text(_label),
           color: widget.backgroundColor,
           textColor: widget.foregroundColor,
           disabledColor: widget.disabledColor.withOpacity(.2),
@@ -117,7 +121,7 @@ class _WButtonState extends State<WButton> {
       case ButtonType.raise:
         return RaisedButton.icon(
           icon: Icon(widget.icon, color: _iconColor),
-          label: Text(widget.label),
+          label: Text(_label),
           color: widget.backgroundColor,
           textColor: widget.foregroundColor,
           disabledColor: widget.disabledColor.withOpacity(.2),
@@ -129,7 +133,7 @@ class _WButtonState extends State<WButton> {
       case ButtonType.outline:
         return OutlineButton.icon(
           icon: Icon(widget.icon, color: _iconColor),
-          label: Text(widget.label),
+          label: Text(_label),
           color: widget.backgroundColor,
           disabledBorderColor: widget.disabledColor.withOpacity(.2),
           disabledTextColor: widget.disabledColor,
@@ -140,7 +144,7 @@ class _WButtonState extends State<WButton> {
       default:
         return FlatButton.icon(
           icon: Icon(widget.icon, color: _iconColor),
-          label: Text(widget.label),
+          label: Text(_label),
           color: widget.backgroundColor,
           textColor: widget.foregroundColor,
           disabledColor: widget.disabledColor.withOpacity(.2),
@@ -183,6 +187,10 @@ class _WButtonState extends State<WButton> {
 
   Color get _iconColor =>
       widget.onPressed == null ? widget.disabledColor : widget.foregroundColor;
+
+  bool get _isOutline => widget.type == ButtonType.outline;
+  
+  String get _label => widget.textAllCaps ? widget.label.toUpperCase() : widget.label;
 
   _onPress() async {
     _toggleLoading();
