@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:wallet/constants/constants.dart';
 import 'package:wallet/generated/l10n.dart';
-import 'package:wallet/ui/screens/home_screen.dart';
+import 'package:wallet/ui/app_controller.dart';
+import 'package:wallet/ui/screens/home/home_screen.dart';
+import 'package:wallet/ui/screens/login/login_screen.dart';
+import 'package:wallet/ui/screens/splash_screen.dart';
 
 class WApp extends StatefulWidget {
   @override
@@ -10,10 +15,22 @@ class WApp extends StatefulWidget {
 }
 
 class _WAppState extends State<WApp> {
+  initStorage() async {
+    await GetStorage.init();
+    await GetStorage.init(StorageConst.homeGroupBox);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initStorage();
+    Get.put(AppController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Wallet',
+      title: Constants.appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
@@ -33,7 +50,17 @@ class _WAppState extends State<WApp> {
         S.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: HomeScreen(),
+      getPages: [
+        GetPage(name: Routes.root, page: () => SplashScreen()),
+        GetPage(name: Routes.home, page: () => HomeScreen()),
+        GetPage(name: Routes.login, page: () => LoginScreen()),
+      ],
     );
   }
+}
+
+class Routes {
+  static const root = '/';
+  static const home = 'home';
+  static const login = 'login';
 }

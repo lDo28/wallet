@@ -6,12 +6,12 @@ import 'package:wallet/ui/vo/tab_bar_item.dart';
 import 'package:wallet/ui/widgets/w_pie_chart.dart';
 import 'package:wallet/ui/widgets/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
+class DemoScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _DemoScreenState createState() => _DemoScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _DemoScreenState extends State<DemoScreen> with TickerProviderStateMixin {
   var tags = ['Design', 'Home', 'Work', 'Phone', 'New'];
   var selectedTags = [];
 

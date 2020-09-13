@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wallet/app.dart';
+import 'package:wallet/ui/app.dart';
 
-void main() {
+main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(WApp());
 }

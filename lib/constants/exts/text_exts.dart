@@ -10,4 +10,6 @@ extension TextExts on TextStyle {
   TextStyle get largeFontSize => this.copyWith(fontSize: 16);
 
   TextStyle get tabFontSize => this.copyWith(fontSize: 18);
+
+  TextStyle get splashLogoFontSize => this.copyWith(fontSize: 30);
 }
