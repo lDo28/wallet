@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wallet/constants/constants.dart';
+import 'package:wallet/constants/exts/exts.dart';
 import 'package:wallet/ui/vo/tab_bar_item.dart';
 
 class WTabBar extends StatefulWidget {
@@ -8,7 +10,7 @@ class WTabBar extends StatefulWidget {
 
   WTabBar({
     Key key,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = WColors.backgroundColor,
     @required this.items,
     this.onSelectChanged,
   }) : super(key: key);
@@ -44,6 +46,7 @@ class _WTabBarState extends State<WTabBar> {
       child: _TabBarView(
         item: item,
         selected: item.index == _selectIndex,
+        length: widget.items.length,
       ),
       onTap: () {
         _updateSelect(item.index);
@@ -55,8 +58,10 @@ class _WTabBarState extends State<WTabBar> {
 class _TabBarView extends StatefulWidget {
   final bool selected;
   final TabBarItem item;
+  final int length;
 
-  const _TabBarView({Key key, this.selected, this.item}) : super(key: key);
+  const _TabBarView({Key key, this.selected, this.item, this.length})
+      : super(key: key);
 
   @override
   _TabBarViewState createState() => _TabBarViewState();
@@ -68,13 +73,13 @@ class _TabBarViewState extends State<_TabBarView>
   Widget build(BuildContext context) {
     return AnimatedSize(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: Constants.duration,
       child: Container(
         width: widget.selected
-            ? MediaQuery.of(context).size.width - (kToolbarHeight * 3)
+            ? MediaQuery.of(context).size.width -
+                (kToolbarHeight * (widget.length - 1))
             : kToolbarHeight,
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
           scrollDirection: Axis.horizontal,
           physics: NeverScrollableScrollPhysics(),
           child: Row(
@@ -85,20 +90,18 @@ class _TabBarViewState extends State<_TabBarView>
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(width: 16),
+                    Dimens.defaultWidthSpace,
                     Text(
                       widget.item.label.toUpperCase(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: widget.item.color,
-                          fontSize: 18),
+                      style:
+                          TextStyle(color: widget.item.color).bold.tabFontSize,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-        ),
+        ).defaultPaddingAll,
       ),
     );
   }

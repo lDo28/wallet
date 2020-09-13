@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wallet/constants/button_type.dart';
+import 'package:wallet/constants/constants.dart';
+import 'package:wallet/constants/exts/exts.dart';
 
 class WButton extends StatefulWidget {
   final ButtonType type;
@@ -9,7 +10,7 @@ class WButton extends StatefulWidget {
   final Color backgroundColor, foregroundColor, disabledColor;
   final double elevation;
   final AsyncCallback onPressed;
-  final int animationDuration;
+  final Duration animationDuration;
   final Curve curve;
   final ProgressIndicator loading;
   final bool textAllCaps;
@@ -19,12 +20,12 @@ class WButton extends StatefulWidget {
       this.type = ButtonType.raise,
       this.icon,
       this.label,
-      this.backgroundColor = Colors.white,
-      this.foregroundColor = Colors.deepPurple,
-      this.disabledColor = Colors.black54,
-      this.elevation = 0,
+      this.backgroundColor = WColors.backgroundColor,
+      this.foregroundColor = WColors.primaryColor,
+      this.disabledColor = WColors.disableColor,
+      this.elevation = Dimens.zero,
       this.onPressed,
-      this.animationDuration = 500,
+      this.animationDuration = Constants.duration,
       this.curve = Curves.easeIn,
       this.loading,
       this.textAllCaps = false})
@@ -46,12 +47,13 @@ class _WButtonState extends State<WButton> with SingleTickerProviderStateMixin {
         color: _isLoading && !_isOutline
             ? widget.backgroundColor
             : Colors.transparent,
-        borderRadius: BorderRadius.circular(_isLoading ? 50 : 8),
+        borderRadius:
+            _isLoading ? Dimens.loadingBorderRadius : Dimens.borderRadius,
       ),
       child: AnimatedSize(
         vsync: this,
         curve: widget.curve,
-        duration: Duration(milliseconds: widget.animationDuration),
+        duration: widget.animationDuration,
         child: _buildButtonTheme(),
       ),
     );
@@ -61,11 +63,11 @@ class _WButtonState extends State<WButton> with SingleTickerProviderStateMixin {
     return ButtonTheme(
       padding: widget.label == null
           ? EdgeInsets.zero
-          : EdgeInsets.symmetric(horizontal: 16),
+          : EdgeInsets.symmetric(horizontal: Dimens.largePadding),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: Dimens.borderRadius,
       ),
-      minWidth: widget.label == null ? 36 : 88,
+      minWidth: widget.label == null ? Dimens.iconButton : Dimens.normalButton,
       child: _buildButton(),
     );
   }
@@ -73,12 +75,9 @@ class _WButtonState extends State<WButton> with SingleTickerProviderStateMixin {
   Widget _buildButton() {
     if (_isLoading && widget.loading != null)
       return SizedBox(
-        height: 48,
-        width: 48,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: widget.loading,
-        ),
+        height: Dimens.loadingSize,
+        width: Dimens.loadingSize,
+        child: widget.loading.paddingAll(Dimens.defaultPadding),
       );
     if (widget.label != null && widget.icon != null)
       return _buildIconLabelButton();
