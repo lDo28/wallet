@@ -18,7 +18,7 @@ class AppController extends GetxController {
   }
 
   authorized() {
-    Get.offAndToNamed(Routes.home);
+    Get.offAndToNamed(Routes.main);
   }
 
   unauthorized() {

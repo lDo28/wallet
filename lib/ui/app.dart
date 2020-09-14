@@ -8,6 +8,7 @@ import 'package:wallet/ui/app_controller.dart';
 import 'package:wallet/ui/screens/demo_screen.dart';
 import 'package:wallet/ui/screens/home/home_screen.dart';
 import 'package:wallet/ui/screens/login/login_screen.dart';
+import 'package:wallet/ui/screens/main/main_screen.dart';
 import 'package:wallet/ui/screens/splash_screen.dart';
 
 class WApp extends StatefulWidget {
@@ -53,7 +54,7 @@ class _WAppState extends State<WApp> {
       supportedLocales: S.delegate.supportedLocales,
       getPages: [
         GetPage(name: Routes.root, page: () => SplashScreen()),
-        GetPage(name: Routes.home, page: () => HomeScreen()),
+        GetPage(name: Routes.main, page: () => MainScreen()),
         GetPage(name: Routes.login, page: () => LoginScreen()),
       ],
     );
@@ -62,6 +63,6 @@ class _WAppState extends State<WApp> {
 
 class Routes {
   static const root = '/';
-  static const home = 'home';
+  static const main = 'main';
   static const login = 'login';
 }
