@@ -1,56 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wallet/constants/constants.dart';
 import 'package:wallet/constants/exts/exts.dart';
 import 'package:wallet/ui/vo/tab_bar_item.dart';
+import 'package:wallet/ui/widgets/controllers/w_tab_bar_controller.dart';
 
-class WTabBar extends StatefulWidget {
+class WTabBar extends StatelessWidget with PreferredSizeWidget {
   final Color backgroundColor;
   final List<TabBarItem> items;
   final Function(int selectIndex) onSelectChanged;
+  final double paddingTop;
+  final WTabBarController _controller = Get.put(WTabBarController());
 
   WTabBar({
     Key key,
     this.backgroundColor = WColors.backgroundColor,
     @required this.items,
     this.onSelectChanged,
+    this.paddingTop = 0,
   }) : super(key: key);
 
-  @override
-  _WTabBarState createState() => _WTabBarState();
-}
-
-class _WTabBarState extends State<WTabBar> {
-  int _selectIndex = 0;
-
   _updateSelect(int index) {
-    if (_selectIndex == index) return;
-    setState(() {
-      _selectIndex = index;
-    });
-    widget.onSelectChanged(index);
+    _controller.updateIndex(index);
+    if (onSelectChanged != null) {
+      onSelectChanged(index);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: widget.backgroundColor,
-      height: kToolbarHeight,
-      child: Row(
-        children: widget.items.map((item) => _buildItem(item)).toList(),
+      color: backgroundColor,
+      height: kToolbarHeight + paddingTop,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => _buildItem(items[index]),
+        itemCount: items.length,
       ),
-    );
+    ).paddingOnly(top: paddingTop);
   }
 
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
   Widget _buildItem(TabBarItem item) {
-    return GestureDetector(
-      child: _TabBarView(
-        item: item,
-        selected: item.index == _selectIndex,
-        length: widget.items.length,
+    return Obx(
+      () => GestureDetector(
+        child: _TabBarView(
+          item: item,
+          selected: item.index == _controller.selectIndex.value,
+          length: items.length,
+        ),
+        onTap: () {
+          _updateSelect(item.index);
+        },
       ),
-      onTap: () {
-        _updateSelect(item.index);
-      },
     );
   }
 }
@@ -101,7 +106,7 @@ class _TabBarViewState extends State<_TabBarView>
               ),
             ],
           ),
-        ).defaultPaddingAll,
+        ).paddingAll(Dimens.largePadding),
       ),
     );
   }

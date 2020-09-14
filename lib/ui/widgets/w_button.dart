@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wallet/constants/constants.dart';
 import 'package:wallet/constants/exts/exts.dart';
 

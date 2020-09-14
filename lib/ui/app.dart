@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wallet/constants/constants.dart';
 import 'package:wallet/generated/l10n.dart';
 import 'package:wallet/ui/app_controller.dart';
+import 'package:wallet/ui/screens/demo_screen.dart';
 import 'package:wallet/ui/screens/home/home_screen.dart';
 import 'package:wallet/ui/screens/login/login_screen.dart';
 import 'package:wallet/ui/screens/splash_screen.dart';

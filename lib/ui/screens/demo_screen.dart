@@ -178,7 +178,10 @@ class _DemoScreenState extends State<DemoScreen> with TickerProviderStateMixin {
                 ),
                 _buildItem(
                   label: 'PieChart',
-                  item: WPieChart(currentProgress: 45),
+                  item: WPieChart(
+                    currentProgress: 95,
+                    size: 70,
+                  ),
                 ),
               ],
             ),

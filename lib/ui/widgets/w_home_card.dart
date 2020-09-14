@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wallet/constants/constants.dart';
-import 'package:wallet/constants/exts/exts.dart';
 
 class WHomeCard extends StatelessWidget {
   final String title;
@@ -46,7 +46,7 @@ class WHomeCard extends StatelessWidget {
                     Dimens.smallHeightSpace,
                     Text(subtitle, style: TextStyle(color: Colors.grey)),
                   ],
-                ).defaultPaddingVertical,
+                ).paddingSymmetric(vertical: Dimens.largePadding),
               ),
               if (onEditPress != null)
                 IconButton(

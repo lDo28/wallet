@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wallet/constants/constants.dart';
-import 'package:wallet/constants/exts/exts.dart';
 import 'package:wallet/ui/widgets/tag_clipper.dart';
 
 class WTagCard extends StatefulWidget {
