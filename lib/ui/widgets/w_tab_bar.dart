@@ -14,7 +14,7 @@ class WTabBar extends StatelessWidget with PreferredSizeWidget {
 
   WTabBar({
     Key key,
-    this.backgroundColor = WColors.backgroundColor,
+    this.backgroundColor = Colors.white,
     @required this.items,
     this.onSelectChanged,
     this.paddingTop = 0,

@@ -22,7 +22,6 @@ class WHomeCard extends StatelessWidget {
     return ButtonTheme(
       padding: EdgeInsets.zero,
       child: RaisedButton(
-        elevation: 0,
         onPressed: onCardPress,
         shape: RoundedRectangleBorder(borderRadius: Dimens.borderRadius),
         color: WColors.backgroundColor,

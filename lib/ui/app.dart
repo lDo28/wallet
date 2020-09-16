@@ -38,7 +38,7 @@ class _WAppState extends State<WApp> {
         brightness: Brightness.light,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.deepPurple,
-        scaffoldBackgroundColor: Colors.grey[200],
+        scaffoldBackgroundColor: Colors.white,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,

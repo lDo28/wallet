@@ -5,6 +5,7 @@ import 'package:wallet/ui/screens/category/category_screen.dart';
 import 'package:wallet/ui/screens/home/home_screen.dart';
 import 'package:wallet/ui/screens/main/main_controller.dart';
 import 'package:wallet/ui/screens/person/person_screen.dart';
+import 'package:wallet/ui/widgets/controllers/w_tab_bar_controller.dart';
 import 'package:wallet/ui/widgets/widgets.dart';
 
 class MainScreen extends StatefulWidget {
@@ -23,6 +24,10 @@ class _MainScreenState extends State<MainScreen>
   void initState() {
     super.initState();
     _pageController = PageController();
+    _pageController.addListener(() {
+      Get.find<WTabBarController>().updateIndex(_pageController.page.round());
+      print("PAGE: "+_pageController.page.round().toString());
+    });
   }
 
   @override
@@ -39,11 +44,8 @@ class _MainScreenState extends State<MainScreen>
         paddingTop: MediaQuery.of(context).padding.top,
         items: _controller.tabs,
         onSelectChanged: (index) {
-          _pageController.animateToPage(
-            index,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
+          if (_pageController.page.toInt() == index) return;
+          _pageController.jumpToPage(index);
         },
       ),
       body: SafeArea(
@@ -54,7 +56,7 @@ class _MainScreenState extends State<MainScreen>
             CategoryScreen(),
             PersonScreen(),
           ],
-        ).paddingOnly(top: Dimens.largePadding),
+        ),
       ),
     );
   }

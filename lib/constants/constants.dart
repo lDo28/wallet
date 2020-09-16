@@ -5,7 +5,7 @@ export 'dimens.dart';
 class Constants {
   static const appName = 'Wallet';
 
-  static const duration = const Duration(milliseconds: 500);
+  static const duration = const Duration(milliseconds: 300);
 }
 
 class StorageConst {
